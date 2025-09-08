@@ -1,0 +1,29 @@
+.ant-table,
+.ant-table-container,
+.ant-table-content,
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td {
+  background: #23272f !important;
+  color: #f8f9fa !important;
+  border-color: #444 !important;
+}
+
+.ant-table-thead > tr > th {
+  background: #181a20 !important;
+  color: #fff !important;
+  border-bottom: 2px solid #444 !important;
+}
+
+.ant-table-tbody > tr > td {
+  background: #23272f !important;
+  color: #f8f9fa !important;
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td {
+  background: #2c313a !important;
+}
+
+.ant-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
