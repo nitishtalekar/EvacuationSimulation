@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const HARDCODED_PASSWORD = "letmein123"; // change this
+const HARDCODED_PASSWORD = "evacsim2025"; // change this
 
 // POST for login
 export async function POST(req: NextRequest) {
