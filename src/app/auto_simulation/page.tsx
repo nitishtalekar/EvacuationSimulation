@@ -1,5 +1,5 @@
 "use client";
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useMemo } from "react";
 import CharacterMessage from "@/components/CharacterMessage";
 import { Table } from "antd";
@@ -10,17 +10,15 @@ import { useRouter } from "next/navigation";
 
 export default function AutoSimulationPage() {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkSession = async () => {
       const res = await fetch("/api/auth");
       const data = await res.json();
       if (!data.authenticated) router.push("/");
-      else setLoading(false);
     };
     checkSession();
-  }, []);
+  }, [router]);
 
   const [characters, setCharacters] = useState<any[]>([
     { name: "Dr. Jane Doe", profession: "Student", personality: "Kind" },
@@ -66,7 +64,7 @@ export default function AutoSimulationPage() {
               setStaticColumns(staticColumns.filter((_, i) => i !== colIdx));
               setCharacters((chars) =>
                 chars.map((char) => {
-                  const { [col.dataIndex]: _, ...rest } = char;
+                  const { [col.dataIndex]: __, ...rest } = char;
                   return rest as any;
                 })
               );
@@ -109,7 +107,7 @@ export default function AutoSimulationPage() {
             setDynamicColumns(newCols);
             setCharacters((chars) =>
               chars.map((char) => {
-                const { [col]: _, ...rest } = char;
+                const { [col]: __, ...rest } = char;
                 return rest as any;
               })
             );
@@ -164,6 +162,7 @@ export default function AutoSimulationPage() {
 
   const tableData = useMemo(
     () => characters.map((char, index) => ({ key: index, ...char })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [characters]
   );
 
@@ -211,7 +210,7 @@ export default function AutoSimulationPage() {
     setAllMessages([]);
     setIsRunning(true);
 
-    for (let msg of evacMessages) {
+    for (const msg of evacMessages) {
       const payload = {
         characters,
         evacmsg: msg,

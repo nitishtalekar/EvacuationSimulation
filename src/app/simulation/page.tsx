@@ -1,8 +1,8 @@
 "use client";
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useMemo } from "react";
 import CharacterMessage from "@/components/CharacterMessage";
-import { Table, Button } from "antd";
+import { Table } from "antd";
 import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import EditableTableTitle from "@/components/EditableColumnTitle";
 import "./table-dark.css";
@@ -11,17 +11,15 @@ import { useRouter } from "next/navigation";
 export default function SimulationPage() {
 
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkSession = async () => {
       const res = await fetch("/api/auth");
       const data = await res.json();
       if (!data.authenticated) router.push("/");
-      else setLoading(false);
     };
     checkSession();
-  }, []);
+  }, [router]);
 
   const [characters, setCharacters] = useState<any[]>([
     {
@@ -79,7 +77,7 @@ export default function SimulationPage() {
               // Remove from each character
               setCharacters((chars) =>
                 chars.map((char) => {
-                  const { [col.dataIndex]: _, ...rest } = char;
+                  const { [col.dataIndex]: __, ...rest } = char;
                   return rest as any;
                 })
               );
@@ -137,7 +135,7 @@ export default function SimulationPage() {
             setDynamicColumns(newCols);
             setCharacters((chars) =>
               chars.map((char) => {
-                const { [col]: _, ...rest } = char;
+                const { [col]: __, ...rest } = char;
                 return rest as any;
               })
             );
@@ -193,11 +191,11 @@ export default function SimulationPage() {
 
   const tableData = useMemo(
     () => characters.map((char, index) => ({ key: index, ...char })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [characters]
   );
 
   const [isSimulationComplete, setIsSimulationComplete] = useState(false);
-  const [savedFilePath, setSavedFilePath] = useState<string | null>(null);
 
   const [evacmsg, setEvacmsg] = useState(
     "Weather alert in your area. Seek shelter immediately."
@@ -247,7 +245,7 @@ export default function SimulationPage() {
 
   const handleStartSimulation = async () => {
     setMessages([]);
-    // setIsRunning(true);
+    setIsRunning(true);
 
     const payload = { characters, evacmsg, systemPrompt, evaluationPrompt };
     console.log("[handleStartSimulation] Payload:", payload);
